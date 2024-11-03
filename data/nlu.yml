@@ -1,0 +1,59 @@
+version: "3.1"
+
+nlu:
+- intent: ask_graduation_data
+  examples: |
+    - Saya ingin tahu data kelulusan untuk tahun [2021](year).
+    - Berikan saya informasi kelulusan tahun [2022](year).
+    - Apa data lulusan untuk tahun [2023](year)?
+    - Coba tunjukkan data kelulusan untuk tahun [2020](year).
+    - Data kelulusan tahun [2019](year) seperti apa?
+    - Tolong data kelulusan tahun [2021](year) untuk jurusan [teknologi informasi](major).
+    - Saya ingin tahu jumlah lulusan jurusan [manajemen](major) tahun [2020](year).
+    - Berikan saya informasi kelulusan tahun [2023](year) untuk jurusan [Ilmu hukum](major).
+    - Mohon data kelulusan jurusan [pemasaran](major) tahun [2022](year).
+    - Apa jumlah lulusan tahun [2019](year) dari jurusan [akuntansi](major)?
+    - Berapa banyak lulusan tahun [2021](year) dari fakultas [bisnis](faculty)?
+    - Tolong data kelulusan tahun [2020](year) untuk fakultas [teknik](faculty).
+    - Saya ingin tahu informasi kelulusan tahun [2022](year) dari fakultas [seni](faculty).
+    - Coba tunjukkan data lulusan tahun [2023](year) dari fakultas [hukum](faculty).
+    - Mohon berikan jumlah lulusan tahun [2019](year) untuk fakultas [kedokteran](faculty).
+    - Saya butuh informasi kelulusan jurusan [teknologi informasi](major) selama [5 tahun terakhir](period).
+    - Berikan saya data lulusan jurusan [manajemen](major) dalam [4 tahun terakhir](period).
+    - Tolong data kelulusan jurusan [Ilmu hukum](major) selama [3 tahun terakhir](period).
+    - Mohon informasi jumlah lulusan jurusan [pemasaran](major) untuk [2 tahun terakhir](period).
+    - Apa data kelulusan jurusan [akuntansi](major) selama [6 tahun terakhir](period)?
+    - Tolong data lulusan dari tahun [2020](year_start) sampai [2022](year_end) untuk jurusan [teknologi informasi](major).
+    - Saya ingin tahu jumlah kelulusan jurusan [manajemen](major) dari tahun [2019](year_start) hingga [2023](year_end).
+    - Berikan saya data kelulusan untuk jurusan [Ilmu hukum](major) dari tahun [2021](year_start) sampai [2022](year_end).
+    - Mohon data kelulusan dari tahun [2022](year_start) hingga [2024](year_end) untuk jurusan [pemasaran](major).
+    - Apa informasi kelulusan dari tahun [2018](year_start) sampai [2020](year_end) untuk jurusan [akuntansi](major)?
+
+- intent: inform_graduation_data
+  examples: |
+    - [2022](year)
+    - [2020](year)
+    - [2021](year)
+    - [2019](year)
+    - [2023](year)
+    - [teknologi informasi](major)
+    - [manajemen](major)
+    - [ilmu hukum](major)
+    - [pemasaran](major)
+    - [akuntansi](major)
+    - [bisnis dan manajemen](faculty)
+    - [manajemen dan akuntansi](faculty)
+    - [pemasaran dan ilmu hukum](faculty)
+    - [teknologi informasi dan manajemen](faculty)
+    - [ilmu hukum dan teknologi informasi](faculty)
+    - [5 tahun terakhir](period)
+    - [4 tahun terakhir](period)
+    - [3 tahun terakhir](period)
+    - [2 tahun terakhir](period)
+    - [6 tahun terakhir](period)
+    - dari tahun [2022](year_start) sampai [2023](year_end)
+    - dari tahun [2021](year_start) sampai [2023](year_end)
+    - dari tahun [2020](year_start) sampai [2022](year_end) untuk jurusan [teknologi informasi](major)
+    - dari tahun [2019](year_start) hingga [2023](year_end) untuk jurusan [manajemen](major)
+    - dari tahun [2021](year_start) sampai [2022](year_end) untuk jurusan [Ilmu hukum](major)
+    - dari tahun [2022](year_start) hingga [2024](year_end) untuk jurusan [pemasaran](major)

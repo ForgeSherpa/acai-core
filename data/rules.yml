@@ -1,0 +1,7 @@
+version: "3.1"
+
+rules:
+- rule: Menangkap permintaan data kelulusan
+  steps:
+  - intent: inform_graduation_data
+  - action: action_store_graduation_data

@@ -1,0 +1,7 @@
+version: "3.1"
+
+stories:
+- story: Tanya data kelulusan
+  steps:
+  - intent: ask_graduation_data
+  - action: action_show_graduation_data

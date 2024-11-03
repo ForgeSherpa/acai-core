@@ -1,0 +1,74 @@
+version: "3.1"
+
+intents:
+  - ask_graduation_data
+  - inform_graduation_data
+
+entities:
+  - year
+  - year_start
+  - year_end
+  - major
+  - faculty
+  - period
+
+slots:
+  year:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: year
+
+  year_start:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: year_start
+
+  year_end:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: year_end
+
+  major:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: major
+
+  faculty:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: faculty
+
+  period:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: period
+
+responses:
+  utter_ask_year:
+    - text: "Tahun :"
+  utter_ask_jurusan:
+    - text: "Jurusan :"
+  utter_ask_faculty:
+    - text: "Fakultas:"
+  utter_ask_period:
+    - text: "Periode:"
+  utter_ask_year_start:
+    - text: "Tahun mulai:"
+  utter_ask_year_end:
+    - text: "Tahun selesai:"
+
+actions:
+  - action_show_graduation_data
+  - action_store_graduation_data
