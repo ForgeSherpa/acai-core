@@ -5,3 +5,18 @@ stories:
   steps:
   - intent: ask_graduation_data
   - action: action_show_graduation_data
+
+- story: Tanya data penelitian
+  steps:
+  - intent: ask_research_data
+  - action: action_show_research_data
+
+- story: Tanya data aktivitas
+  steps:
+  - intent: ask_activity_data
+  - action: action_show_activity_data
+
+- story: Tanya data ipk
+  steps:
+  - intent: ask_ipk_data
+  - action: action_show_ipk_data

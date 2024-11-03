@@ -5,3 +5,18 @@ rules:
   steps:
   - intent: inform_graduation_data
   - action: action_store_graduation_data
+
+- rule: Menangkap permintaan data penelitian
+  steps:
+  - intent: inform_research_data
+  - action: action_store_research_data
+
+- rule: Menangkap permintaan data aktivitas
+  steps:
+  - intent: inform_activity_data
+  - action: action_store_activity_data
+
+- rule: Menangkap permintaan data ipk
+  steps:
+  - intent: inform_ipk_data
+  - action: action_store_ipk_data
