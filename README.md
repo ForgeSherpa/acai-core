@@ -1,4 +1,4 @@
-# Chatbot Project
+# Text Prompt Projek
 
 **Text Prompt berbasis NLU menggunakan Rasa Framework.**
 
