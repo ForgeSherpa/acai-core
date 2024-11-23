@@ -1,8 +1,44 @@
-import json
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from datetime import datetime
+
+def build_response(tracker: Tracker) -> dict:
+    # Get slot values
+    year_start = tracker.get_slot('year_start')
+    year_end = tracker.get_slot('year_end')
+    year = tracker.get_slot('year')
+    major = tracker.get_slot('major')
+    period = tracker.get_slot('period')
+    faculty = tracker.get_slot('faculty')
+
+    # Value of period_years
+    period_years = None
+    if period == "dari tahun lalu":
+        period_years = 1
+    elif period:
+        period_years = int(period.split()[0]) if period.split()[0].isdigit() else None
+
+    # Construct the response data
+    response = {}
+    if year_start and year_end:
+        year_starts = int(year_start.split()[1])
+        year_ends = int(year_end.split()[1])
+        response["year_range"] = calculate_years_range(year_starts, year_ends)
+    if year:
+        response["year"] = year
+    if major:
+        response["major"] = major
+    if faculty:
+        response["faculty"] = faculty
+    if period_years:
+        response["period"] = calculate_period_range(period_years)
+
+    return response
+
+def reset_slots(slot_names: list) -> list:
+    return [SlotSet(slot, None) for slot in slot_names]
+
 
 def calculate_period_range(period_years: int) -> str:
     current_year = datetime.now().year
@@ -23,59 +59,26 @@ class ActionShowGraduationData(Action):
         # Set the intent for this action
         intent = "permintaan_data_kelulusan"
         
-        # Get slot values
-        year_start = tracker.get_slot('year_start')
-        year_end = tracker.get_slot('year_end')
-        year = tracker.get_slot('year')
-        major = tracker.get_slot('major')
-        faculty = tracker.get_slot('faculty')
-        period = tracker.get_slot('period')
-        cohort = tracker.get_slot('cohort')
+        response = build_response(tracker)
 
-        # value of period_years
-        period_years = None
-        if period == "dari tahun lalu":
-            period_years = 1
-        elif period:
-            period_years = int(period.split()[0]) if period.split()[0].isdigit() else None
-
-        # Construct the response data
-        response = {}
-        if year_start and year_end:
-            year_starts = int(year_start.split()[2])
-            year_ends = int(year_end.split()[1])
-            response ["year_range"] = calculate_years_range(year_starts, year_ends)
-        if year:
-            response["year"] = year
-        if major:
-            response["major"] = major
-        if faculty:
-            response["faculty"] = faculty
-        if period_years:
-            response["period"] = calculate_period_range(period_years)
-        if cohort:
-            response["cohort"] = int(cohort.split()[1])
-
-        # Build final response including intent and entities
+        # Prepare data to be sent to backend
         final_response = {
             "intent": intent,
             "entities": response
         }
 
-        # Send the response as a JSON message
         dispatcher.utter_message(json_message=final_response)
 
-        # Reset slots after sending response
-        return [
-            SlotSet("year_start", None),
-            SlotSet("year_end", None),
-            SlotSet("year_range", None),
-            SlotSet("year", None),
-            SlotSet("major", None),
-            SlotSet("faculty", None),
-            SlotSet("period", None),
-            SlotSet("cohort", None)
-        ]
+        return reset_slots([
+                    "year_start",
+                    "year_end",
+                    "year_range",
+                    "year",
+                    "major",
+                    "period",
+                    "faculty"
+                ])
+
 
 class ActionShowResearchData(Action):
     def name(self) -> str:
@@ -86,38 +89,8 @@ class ActionShowResearchData(Action):
         intent = "permintaan_data_penelitian"
         
         # Get slot values
-        year_start = tracker.get_slot('year_start')
-        year_end = tracker.get_slot('year_end')
-        year = tracker.get_slot('year')
-        major = tracker.get_slot('major')
-        faculty = tracker.get_slot('faculty')
-        period = tracker.get_slot('period')
-        cohort = tracker.get_slot('cohort')
-
-        # value of period_years
-        period_years = None
-        if period == "dari tahun lalu":
-            period_years = 1
-        elif period:
-            period_years = int(period.split()[0]) if period.split()[0].isdigit() else None
-
-        # Construct the response data
-        response = {}
-        if year_start and year_end:
-            year_starts = int(year_start.split()[2])
-            year_ends = int(year_end.split()[1])
-            response ["year_range"] = calculate_years_range(year_starts, year_ends)
-        if year:
-            response["year"] = year
-        if major:
-            response["major"] = major
-        if faculty:
-            response["faculty"] = faculty
-        if period_years:
-            response["period"] = calculate_period_range(period_years)
-        if cohort:
-            response["cohort"] = int(cohort.split()[1])
-
+        response = build_response(tracker)
+        
         # Build final response including intent and entities
         final_response = {
             "intent": intent,
@@ -128,16 +101,15 @@ class ActionShowResearchData(Action):
         dispatcher.utter_message(json_message=final_response)
 
         # Reset slots after sending response
-        return [
-            SlotSet("year_start", None),
-            SlotSet("year_end", None),
-            SlotSet("year_range", None),
-            SlotSet("year", None),
-            SlotSet("major", None),
-            SlotSet("faculty", None),
-            SlotSet("period", None),
-            SlotSet("cohort", None)
-        ]
+        return reset_slots([
+                    "year_start",
+                    "year_end",
+                    "year_range",
+                    "year",
+                    "major",
+                    "period",
+                    "faculty"
+                ])
 
 class ActionShowActivityData(Action):
     def name(self) -> str:
@@ -148,37 +120,11 @@ class ActionShowActivityData(Action):
         intent = "permintaan_data_aktivitas"
         
         # Get slot values
-        year_start = tracker.get_slot('year_start')
-        year_end = tracker.get_slot('year_end')
-        year = tracker.get_slot('year')
-        major = tracker.get_slot('major')
-        faculty = tracker.get_slot('faculty')
-        period = tracker.get_slot('period')
-        cohort = tracker.get_slot('cohort')
+        activity_level = tracker.get_slot('activity_level')
 
-        # value of period_years
-        period_years = None
-        if period == "dari tahun lalu":
-            period_years = 1
-        elif period:
-            period_years = int(period.split()[0]) if period.split()[0].isdigit() else None
-
-        # Construct the response data
-        response = {}
-        if year_start and year_end:
-            year_starts = int(year_start.split()[2])
-            year_ends = int(year_end.split()[1])
-            response ["year_range"] = calculate_years_range(year_starts, year_ends)
-        if year:
-            response["year"] = year
-        if major:
-            response["major"] = major
-        if faculty:
-            response["faculty"] = faculty
-        if period_years:
-            response["period"] = calculate_period_range(period_years)
-        if cohort:
-            response["cohort"] = int(cohort.split()[1])
+        response = build_response(tracker)
+        if activity_level:
+            response["activity_level"] = activity_level
 
         # Build final response including intent and entities
         final_response = {
@@ -190,16 +136,16 @@ class ActionShowActivityData(Action):
         dispatcher.utter_message(json_message=final_response)
 
         # Reset slots after sending response
-        return [
-            SlotSet("year_start", None),
-            SlotSet("year_end", None),
-            SlotSet("year_range", None),
-            SlotSet("year", None),
-            SlotSet("major", None),
-            SlotSet("faculty", None),
-            SlotSet("period", None),
-            SlotSet("cohort", None)
-        ]
+        return reset_slots([
+                    "year_start",
+                    "year_end",
+                    "year_range",
+                    "year",
+                    "major",
+                    "period",
+                    "faculty",
+                    "activity_level"
+                ])
 
 class ActionShowIPKData(Action):
     def name(self) -> str:
@@ -210,35 +156,9 @@ class ActionShowIPKData(Action):
         intent = "permintaan_data_ipk"
         
         # Get slot values
-        year_start = tracker.get_slot('year_start')
-        year_end = tracker.get_slot('year_end')
-        year = tracker.get_slot('year')
-        major = tracker.get_slot('major')
-        faculty = tracker.get_slot('faculty')
-        period = tracker.get_slot('period')
         cohort = tracker.get_slot('cohort')
 
-        # value of period_years
-        period_years = None
-        if period == "dari tahun lalu":
-            period_years = 1
-        elif period:
-            period_years = int(period.split()[0]) if period.split()[0].isdigit() else None
-
-        # Construct the response data
-        response = {}
-        if year_start and year_end:
-            year_starts = int(year_start.split()[2])
-            year_ends = int(year_end.split()[1])
-            response ["year_range"] = calculate_years_range(year_starts, year_ends)
-        if year:
-            response["year"] = year
-        if major:
-            response["major"] = major
-        if faculty:
-            response["faculty"] = faculty
-        if period_years:
-            response["period"] = calculate_period_range(period_years)
+        response = build_response(tracker)
         if cohort:
             response["cohort"] = int(cohort.split()[1])
 
@@ -252,13 +172,14 @@ class ActionShowIPKData(Action):
         dispatcher.utter_message(json_message=final_response)
 
         # Reset slots after sending response
-        return [
-            SlotSet("year_start", None),
-            SlotSet("year_end", None),
-            SlotSet("year_range", None),
-            SlotSet("year", None),
-            SlotSet("major", None),
-            SlotSet("faculty", None),
-            SlotSet("period", None),
-            SlotSet("cohort", None)
-        ]
+        return reset_slots([
+                    "year_start",
+                    "year_end",
+                    "year_range",
+                    "year",
+                    "major",
+                    "period",
+                    "faculty",
+                    "activity_level",
+                    "cohort"
+                ])

@@ -16,9 +16,10 @@ entities:
   - year_end
   - year_range
   - major
-  - faculty
+  - activity_level
   - period
   - cohort
+  - faculty
 
 slots:
   year:
@@ -56,13 +57,6 @@ slots:
       - type: from_entity
         entity: major
 
-  faculty:
-    type: text
-    influence_conversation: false
-    mappings:
-      - type: from_entity
-        entity: faculty
-
   period:
     type: text
     influence_conversation: false
@@ -70,12 +64,26 @@ slots:
       - type: from_entity
         entity: period
   
+  activity_level:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: activity_level
+
   cohort:
     type: text
     influence_conversation: false
     mappings:
       - type: from_entity
         entity: cohort
+
+  faculty:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: faculty
 
 actions:
   - action_show_graduation_data
