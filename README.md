@@ -26,3 +26,11 @@ Ikuti langkah-langkah di bawah untuk menjalankan proyek ini:
 **Local**:
 - Terminal 1 : rasa run actions
 - Terminal 2 : rasa shell
+
+## Authors
+- [@Justatnann](https://www.github.com/Justatnann) - Designer / Data Collector
+- [@Albetnv](https://www.github.com/albetnov) - BackEnd Developer
+- [@DJason](https://www.github.com/Djason28) - Data Scientist / Model Developer
+- [@Wira](https://www.github.com/Wira) - Designer / Front End Developer
+- [@JesenJeverlino](https://www.github.com/JesenJeverlino) - Designer / Front End Developer
+- @Kelvin - Data Scientist / Model Developer
