@@ -20,3 +20,8 @@ rules:
   steps:
   - intent: inform_ipk_data
   - action: action_store_ipk_data
+
+- rule: Menangkap permintaan data dosen
+  steps:
+  - intent: inform_lecturer_data
+  - action: action_store_lecturer_data

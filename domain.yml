@@ -9,6 +9,8 @@ intents:
   - inform_activity_data
   - ask_ipk_data
   - inform_ipk_data
+  - ask_lecturer_data
+  - inform_lecturer_data
 
 entities:
   - year
@@ -20,6 +22,7 @@ entities:
   - period
   - cohort
   - faculty
+  - lecturer
 
 slots:
   year:
@@ -85,6 +88,16 @@ slots:
       - type: from_entity
         entity: faculty
 
+  lecturer:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: lecturer
+    
+
+  
+
 actions:
   - action_show_graduation_data
   - action_store_graduation_data
@@ -94,3 +107,5 @@ actions:
   - action_store_activity_data
   - action_show_ipk_data
   - action_store_ipk_data
+  - action_show_lecturer_data
+  - action_store_lecturer_data

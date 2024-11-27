@@ -183,3 +183,34 @@ class ActionShowIPKData(Action):
                     "activity_level",
                     "cohort"
                 ])
+
+class ActionShowLecturerData(Action):
+    def name(self) -> str:
+        return "action_show_lecturer_data"
+
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain) -> list:
+        # Set the intent for this action
+        intent = "permintaan_data_dosen"
+        
+        # Get slot values
+        lecturer = tracker.get_slot('lecturer')
+
+        response = build_response(tracker)
+        if lecturer:
+            response["lecturer"] = lecturer
+
+        # Build final response including intent and entities
+        final_response = {
+            "intent": intent,
+            "entities": response
+        }
+
+        # Send the response as a JSON message
+        dispatcher.utter_message(json_message=final_response)
+
+        # Reset slots after sending response
+        return reset_slots([
+                    "major",
+                    "faculty",
+                    "lecturer"
+                ])

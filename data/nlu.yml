@@ -113,4 +113,60 @@ nlu:
     - [angkatan 2022](cohort)
     - [angkatan 2018](cohort)
     - [angkatan 2019](cohort)
-    - [sistem informasi]{major}
+    - [sistem informasi](major)
+
+- intent: ask_lecturer_data
+  examples: |
+    - Ada dosen di Fakultas [Ilmu Pendidikan](faculty)?
+    - Saya ingin tahu dosen di Fakultas [Teknik Sipil dan Perencanaan](faculty).
+    - Siapa saja dosen di [Arsitektur](major)?
+    - Tolong berikan daftar dosen yang mengajar jurusan [Sistem Informasi](major).
+    - Apakah ada dosen di [Teknologi Informasi](major)?
+    - Dosen di Fakultas [Bisnis dan Manajemen](faculty) siapa saja?
+    - Saya ingin mengetahui dosen di jurusan [Akuntansi](major).
+    - Ada data dosen jurusan [Pariwisata](major)?
+    - Bisa berikan saya informasi tentang dosen di [Magister Manajemen](major)?
+    - Saya ingin tahu dosen di Fakultas [Hukum](faculty).
+    - Siapa saja dosen di jurusan [Ilmu Hukum](major)?
+    - Apa saja informasi tentang dosen di [Magister Hukum](major)?
+    - Dosen [Teknik Sipil](major)?
+    - Dosen [Arsitektur](major)?
+    - Dosen di [Ilmu Hukum](major)?
+    - Dosen [Manajemen](major)?
+    - Dosen [Sistem Informasi](major)?
+    - Dosen [Magister Manajemen](major)?
+    - Dosen [Pariwisata](major)?
+    - Dosen Fakultas [Ilmu Pendidikan](faculty)?
+    - Dosen di Fakultas [Ilmu Komputer](faculty)?
+    - Ada dosen di Fakultas [Hukum](faculty)?
+    - Dosen jurusan [Akuntansi](major)?
+    - Siapa saja dosen di [Sistem Informasi](major)?
+    - Dosen [Teknologi Informasi](major)?
+    - Dosen [Magister Hukum](major)?
+    - Ada dosen di Fakultas [Bisnis dan Manajemen](faculty)?
+    - Dosen di [Teknologi Informasi](major)?
+    - Ada dosen di [Arsitektur](major)?
+    - Dosen [Hukum](major)?
+    - Dosen Fakultas [Teknik Sipil](faculty)?
+    - Dosen Fakultas [Pendidikan](faculty)?
+    - Tolong informasikan siapa dosen di [Arsitektur](major).
+    - Daftar dosen [Teknik Sipil](major)?
+    - List dosen [Sistem Informasi](major)
+    - Berikan list dosen [Arsitektur](major)
+
+- intent: inform_lecturer_data
+  examples: |
+    - [Fakultas Ilmu Pendidikan](faculty)
+    - [Fakultas Teknik Sipil dan Perencanaan](faculty)
+    - [Fakultas Ilmu Komputer](faculty)
+    - [Fakultas Hukum](faculty)
+    - [Pendidikan Bahasa Inggris](major)
+    - [Teknik Sipil](major)
+    - [Sistem Informasi](major)
+    - [Akuntansi](major)
+    - [Pariwisata](major)
+    - [Manajemen](major)
+    - [Hukum](major)
+    - [dosen](lecturer)
+    - [Magister Hukum](major)
+    - [Magister Manajemen](major)

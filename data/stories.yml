@@ -20,3 +20,8 @@ stories:
   steps:
   - intent: ask_ipk_data
   - action: action_show_ipk_data
+
+- story: Tanya data dosen
+  steps:
+  - intent: ask_lecturer_data
+  - action: action_show_lecturer_data  
