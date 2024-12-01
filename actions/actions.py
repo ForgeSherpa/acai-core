@@ -98,15 +98,15 @@ class ActionShowGraduationData(Action):
 
         dispatcher.utter_message(json_message=final_response)
 
-        return [
-            SlotSet("start", None),
-            SlotSet("end", None), 
-            SlotSet("year_range", None), 
-            SlotSet("year", None), 
-            SlotSet("major", None),
-            SlotSet("faculty", None),
-            SlotSet("period", None)
-        ]
+        return reset_slots([
+            "start",
+            "end", 
+            "year_range", 
+            "year", 
+            "major",
+            "faculty",
+            "period"
+        ])
 
 
 
@@ -135,15 +135,16 @@ class ActionShowResearchData(Action):
 
         dispatcher.utter_message(json_message=final_response)
         
-        return [
-            SlotSet("start", None),
-            SlotSet("end", None),
-            SlotSet("year_range", None),
-            SlotSet("year", None),
-            SlotSet("major", None),
-            SlotSet("faculty", None),
-            SlotSet("period", None)
-        ]
+        return reset_slots([
+            "start",
+            "end",
+            "year_range",
+            "year",
+            "major",
+            "faculty",
+            "period"
+        ])
+
 
 
 class ActionShowActivityData(Action):
@@ -171,16 +172,16 @@ class ActionShowActivityData(Action):
 
         dispatcher.utter_message(json_message=final_response)
 
-        return [
-            SlotSet("start", None),
-            SlotSet("end", None),
-            SlotSet("year_range", None),
-            SlotSet("year", None),
-            SlotSet("major", None),
-            SlotSet("faculty", None),
-            SlotSet("period", None),
-            SlotSet("activity_level", None)
-        ]
+        return reset_slots([
+            "start",
+            "end",
+            "year_range",
+            "year",
+            "major",
+            "faculty",
+            "period",
+            "activity_level"
+        ])
 
 
 class ActionShowIPKData(Action):
@@ -207,16 +208,16 @@ class ActionShowIPKData(Action):
 
         dispatcher.utter_message(json_message=final_response)
 
-        return [
-            SlotSet("start", None),
-            SlotSet("end", None),
-            SlotSet("year_range", None),
-            SlotSet("year", None),
-            SlotSet("major", None),
-            SlotSet("faculty", None),
-            SlotSet("period", None),
-            SlotSet("cohort", None)
-        ]
+        return reset_slots([
+            "start",
+            "end",
+            "year_range",
+            "year",
+            "major",
+            "faculty",
+            "period",
+            "cohort"
+        ])
 
 class ActionShowLecturerData(Action):
     def name(self) -> str:
@@ -234,7 +235,7 @@ class ActionShowLecturerData(Action):
 
         dispatcher.utter_message(json_message=final_response)
     
-        return [
-            SlotSet("major", None),
-            SlotSet("faculty", None)
-        ]
+        return reset_slots([
+            "major",
+            "faculty"
+        ])
