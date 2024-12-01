@@ -2,43 +2,75 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from datetime import datetime
+from rapidfuzz import process
+import re
+
+def extract_number(text: str) -> int:
+    match = re.search(r'\b\d+\b', text)
+    return int(match.group()) if match else None
+
+def word_match(input_text: str, patterns: list, threshold: int = 85) -> str:
+    result = process.extractOne(input_text, patterns)  
+    if result and result[1] >= threshold:
+        return result[0] 
+    return input_text 
 
 def build_response(tracker: Tracker) -> dict:
-    # Get slot values
-    year_start = tracker.get_slot('year_start')
-    year_end = tracker.get_slot('year_end')
+    start = tracker.get_slot('start')
+    end = tracker.get_slot('end')
     year = tracker.get_slot('year')
     major = tracker.get_slot('major')
     period = tracker.get_slot('period')
     faculty = tracker.get_slot('faculty')
 
-    # Value of period_years
+    faculty_patterns = ["Bisnis dan Manajemen", "Ilmu Pendidikan", "Ilmu Komputer", "Teknik Sipil dan Perencanaan", "Hukum"]
+    major_patterns = [
+        "Manajemen", "Akuntansi", "Pariwisata", "Pendidikan Bahasa Inggris", 
+        "Teknik Sipil", "Arsitektur", "Ilmu Hukum", "Sistem Informasi", "Teknologi Informasi",
+    ]
+
+    if faculty:
+        faculty = word_match(faculty.lower(), faculty_patterns)
+    if major:
+        major = word_match(major.lower(), major_patterns)
+
     period_years = None
     if period == "dari tahun lalu":
         period_years = 1
     elif period:
         period_years = int(period.split()[0]) if period.split()[0].isdigit() else None
 
-    # Construct the response data
     response = {}
-    if year_start and year_end:
-        year_starts = int(year_start.split()[1])
-        year_ends = int(year_end.split()[1])
-        response["year_range"] = calculate_years_range(year_starts, year_ends)
+    mode = "list"
+
+    message = tracker.latest_message.get("text", "").lower()
+    if "rata-rata" in message:
+        mode = "avg"
+
+    if start and end:
+        starts = int(start.split()[1])
+        ends = int(end.split()[1])
+        response["range"] = calculate_years_range(starts, ends)
+        mode = "sum" 
     if year:
-        response["year"] = year
+        year_number = extract_number(year)
+        if year_number: 
+            response["year"] = year_number
     if major:
         response["major"] = major
     if faculty:
         response["faculty"] = faculty
     if period_years:
-        response["period"] = calculate_period_range(period_years)
+        response["range"] = calculate_period_range(period_years)
+        mode = "sum" 
+
+    response["mode"] = mode
 
     return response
 
+
 def reset_slots(slot_names: list) -> list:
     return [SlotSet(slot, None) for slot in slot_names]
-
 
 def calculate_period_range(period_years: int) -> str:
     current_year = datetime.now().year
@@ -48,20 +80,17 @@ def calculate_period_range(period_years: int) -> str:
         start_year = current_year - period_years
     return f"{start_year} - {current_year}"
 
-def calculate_years_range(year_start: int, year_end: int) -> str:
-    return f"{year_start} - {year_end}"
+def calculate_years_range(start: int, end: int) -> str:
+    return f"{start} - {end}"
 
 class ActionShowGraduationData(Action):
     def name(self) -> str:
         return "action_show_graduation_data"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain) -> list:
-        # Set the intent for this action
-        intent = "permintaan_data_kelulusan"
-        
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, _domain) -> list:
+        intent = "ask_graduation_data"
         response = build_response(tracker)
 
-        # Prepare data to be sent to backend
         final_response = {
             "intent": intent,
             "entities": response
@@ -69,148 +98,143 @@ class ActionShowGraduationData(Action):
 
         dispatcher.utter_message(json_message=final_response)
 
-        return reset_slots([
-                    "year_start",
-                    "year_end",
-                    "year_range",
-                    "year",
-                    "major",
-                    "period",
-                    "faculty"
-                ])
+        return [
+            SlotSet("start", None),
+            SlotSet("end", None), 
+            SlotSet("year_range", None), 
+            SlotSet("year", None), 
+            SlotSet("major", None),
+            SlotSet("faculty", None),
+            SlotSet("period", None)
+        ]
+
 
 
 class ActionShowResearchData(Action):
     def name(self) -> str:
         return "action_show_research_data"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain) -> list:
-        # Set the intent for this action
-        intent = "permintaan_data_penelitian"
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, _domain) -> list:
+        intent = "ask_research_data"
+
+        publication_type = tracker.get_slot('publication_type')
         
-        # Get slot values
+        publication_type_patterns = ["Nasional non-sinta", "Scopus", "Sinta", "international"]
+
+        if publication_type:
+            publication_type = word_match(publication_type.lower(), publication_type_patterns)
+
         response = build_response(tracker)
+        if publication_type:
+            response["publication_type"] = publication_type
         
-        # Build final response including intent and entities
         final_response = {
             "intent": intent,
             "entities": response
         }
 
-        # Send the response as a JSON message
         dispatcher.utter_message(json_message=final_response)
+        
+        return [
+            SlotSet("start", None),
+            SlotSet("end", None),
+            SlotSet("year_range", None),
+            SlotSet("year", None),
+            SlotSet("major", None),
+            SlotSet("faculty", None),
+            SlotSet("period", None)
+        ]
 
-        # Reset slots after sending response
-        return reset_slots([
-                    "year_start",
-                    "year_end",
-                    "year_range",
-                    "year",
-                    "major",
-                    "period",
-                    "faculty"
-                ])
 
 class ActionShowActivityData(Action):
     def name(self) -> str:
         return "action_show_activity_data"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain) -> list:
-        # Set the intent for this action
-        intent = "permintaan_data_aktivitas"
-        
-        # Get slot values
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, _domain) -> list:
+        intent = "ask_activity_data"
+
         activity_level = tracker.get_slot('activity_level')
+
+        activity_level_patterns = ["internasional", "lokal", "nasional"]
+
+        if activity_level:
+            activity_level = word_match(activity_level.lower(), activity_level_patterns)
 
         response = build_response(tracker)
         if activity_level:
             response["activity_level"] = activity_level
 
-        # Build final response including intent and entities
         final_response = {
             "intent": intent,
             "entities": response
         }
 
-        # Send the response as a JSON message
         dispatcher.utter_message(json_message=final_response)
 
-        # Reset slots after sending response
-        return reset_slots([
-                    "year_start",
-                    "year_end",
-                    "year_range",
-                    "year",
-                    "major",
-                    "period",
-                    "faculty",
-                    "activity_level"
-                ])
+        return [
+            SlotSet("start", None),
+            SlotSet("end", None),
+            SlotSet("year_range", None),
+            SlotSet("year", None),
+            SlotSet("major", None),
+            SlotSet("faculty", None),
+            SlotSet("period", None),
+            SlotSet("activity_level", None)
+        ]
+
 
 class ActionShowIPKData(Action):
     def name(self) -> str:
         return "action_show_ipk_data"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain) -> list:
-        # Set the intent for this action
-        intent = "permintaan_data_ipk"
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, _domain) -> list:
+        intent = "ask_ipk_data"
         
-        # Get slot values
         cohort = tracker.get_slot('cohort')
 
         response = build_response(tracker)
+        
         if cohort:
-            response["cohort"] = int(cohort.split()[1])
+            cohort_number = extract_number(cohort)
+            if cohort_number:
+                response["cohort"] = cohort_number
 
-        # Build final response including intent and entities
+
         final_response = {
             "intent": intent,
             "entities": response
         }
 
-        # Send the response as a JSON message
         dispatcher.utter_message(json_message=final_response)
 
-        # Reset slots after sending response
-        return reset_slots([
-                    "year_start",
-                    "year_end",
-                    "year_range",
-                    "year",
-                    "major",
-                    "period",
-                    "faculty",
-                    "activity_level",
-                    "cohort"
-                ])
+        return [
+            SlotSet("start", None),
+            SlotSet("end", None),
+            SlotSet("year_range", None),
+            SlotSet("year", None),
+            SlotSet("major", None),
+            SlotSet("faculty", None),
+            SlotSet("period", None),
+            SlotSet("cohort", None)
+        ]
 
 class ActionShowLecturerData(Action):
     def name(self) -> str:
         return "action_show_lecturer_data"
-
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain) -> list:
-        # Set the intent for this action
-        intent = "permintaan_data_dosen"
+    
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, _domain) -> list:
+        intent = "ask_lecturer_data"
         
-        # Get slot values
-        lecturer = tracker.get_slot('lecturer')
-
         response = build_response(tracker)
-        if lecturer:
-            response["lecturer"] = lecturer
 
-        # Build final response including intent and entities
         final_response = {
             "intent": intent,
             "entities": response
         }
 
-        # Send the response as a JSON message
         dispatcher.utter_message(json_message=final_response)
-
-        # Reset slots after sending response
-        return reset_slots([
-                    "major",
-                    "faculty",
-                    "lecturer"
-                ])
+    
+        return [
+            SlotSet("major", None),
+            SlotSet("faculty", None)
+        ]

@@ -23,11 +23,11 @@ nlu:
     - Saya ingin tahu informasi kelulusan tahun [2022](year) dari fakultas [Teknik Sipil dan Perencanaan](faculty).
     - Coba tunjukkan data lulusan tahun [2023](year) dari fakultas [Ilmu Komputer](faculty).
     - Mohon berikan jumlah lulusan tahun [2019](year) untuk fakultas [Pendidikan](faculty).
-    - Tolong data lulusan [tahun 2020](year_start) [sampai 2022](year_end) untuk jurusan [teknologi informasi](major).
-    - Saya ingin tahu jumlah kelulusan jurusan [manajemen](major) dari [tahun 2019](year_start) [hingga 2023](year_end).
-    - Berikan saya data kelulusan untuk jurusan [Ilmu hukum](major) dari [tahun 2021](year_start) [sampai 2022](year_end).
-    - Mohon data kelulusan [tahun 2022](year_start) [hingga 2024](year_end) untuk jurusan [pemasaran](major).
-    - Apa informasi kelulusan [tahun 2018](year_start) [sampai 2020](year_end) untuk jurusan [akuntansi](major)?
+    - Tolong data lulusan [tahun 2020](start) [sampai 2022](end) untuk jurusan [teknologi informasi](major).
+    - Saya ingin tahu jumlah kelulusan jurusan [manajemen](major) dari [tahun 2019](start) [hingga 2023](end).
+    - Berikan saya data kelulusan untuk jurusan [Ilmu hukum](major) dari [tahun 2021](start) [sampai 2022](end).
+    - Mohon data kelulusan [tahun 2022](start) [hingga 2024](end) untuk jurusan [pemasaran](major).
+    - Apa informasi kelulusan [tahun 2018](start) [sampai 2020](end) untuk jurusan [akuntansi](major)?
 
 - intent: inform_graduation_data
   examples: |
@@ -35,19 +35,19 @@ nlu:
     - [teknologi informasi](major)
     - [5 tahun terakhir](period)
     - [bisnis dan manajemen](faculty)
-    - [tahun 2022](year_start) [sampai 2023](year_end)
-    - [tahun 2020](year_start) [sampai 2022](year_end) untuk jurusan [teknologi informasi](major)
+    - [tahun 2022](start) [sampai 2023](end)
+    - [tahun 2020](start) [sampai 2022](end) untuk jurusan [teknologi informasi](major)
 
 - intent: ask_research_data
   examples: |
     - Saya butuh data penelitian dosen pada tahun [2022](year).
     - Tolong kirimkan saya data penelitian dosen tahun [2020](year) dari jurusan [teknologi informasi](major).
     - Berikan penelitan dosen tahun [2018](year) untuk fakultas [ilmu komputer](faculty).
-    - Ada data penelitian dari jurusan [manajemen](major) tahun [2021](year)?
-    - Saya ingin tahu tentang data penelitian dari tahun dari [tahun 2022](year_start) [sampai 2023](year_end).
-    - Apakah ada penelitian yang dilakukan oleh dosen dari dari [tahun 2019](year_start) [hingga 2023](year_end) untuk jurusan [akuntansi](major)?
-    - Berikan saya data penelitian yang dilakukan dari [tahun 2021](year_start) [sampai 2022](year_end) untuk jurusan [Ilmu hukum](major).
-    - Tolong kirimkan informasi tentang data penelitian di jurusan [pemasaran](major) dari [tahun 2022](year_start) [hingga 2024](year_end).
+    - Ada data penelitian dari jurusan [manajemen](major) tahun [2021](year) tingkat [international](publication_type)?
+    - Saya ingin tahu tentang data penelitian tingkat [Nasional non-sinta](publication_type) dari tahun dari [tahun 2022](start) [sampai 2023](end).
+    - Apakah ada penelitian yang dilakukan oleh dosen dari dari [tahun 2019](start) [hingga 2023](end) untuk jurusan [akuntansi](major)?
+    - Berikan saya data penelitian tingkat [Scopus](publication_type) yang dilakukan dari [tahun 2021](start) [sampai 2022](end) untuk jurusan [Ilmu hukum](major).
+    - Tolong kirimkan informasi tentang data penelitian tingkat [Sinta](publication_type) di jurusan [pemasaran](major) dari [tahun 2022](start) [hingga 2024](end).
 
 - intent: inform_research_data
   examples: |
@@ -55,8 +55,12 @@ nlu:
     - [manajemen](major)
     - [4 tahun terakhir](period)
     - [Ilmu Komputer](faculty)
-    - [tahun 2021](year_start) [sampai 2023](year_end)
-    - [tahun 2019](year_start) [hingga 2023](year_end) untuk jurusan [manajemen](major)
+    - [tahun 2021](start) [sampai 2023](end)
+    - [tahun 2019](start) [hingga 2023](end) untuk jurusan [manajemen](major)
+    - [Scopus](publication_type)
+    - [Sinta](publication_type)
+    - [Nasional non-sinta](publication_type)
+    - [international](publication_type)
 
 - intent: ask_activity_data
   examples: |
@@ -68,9 +72,9 @@ nlu:
     - Apa data kegiatan mahasiswa jurusan [manajemen](major) di [5 tahun terakhir](period)?
     - Berikan saya data kegiatan dari jurusan [pemasaran](major) tahun [2023](year).
     - Coba tunjukkan kegiatan yang diadakan di fakultas [Hukum](faculty) tahun [2019](year).
-    - Mohon informasi kegiatan mahasiswa dari [tahun 2021](year_start) [sampai 2023](year_end).
-    - Apa saja kegiatan yang dilakukan dari [tahun 2020](year_start) [hingga 2022](year_end) oleh mahasiswa jurusan [akuntansi](major)?
-    - Saya butuh informasi mengenai kegiatan [dari 2022](year_start) [hingga 2024](year_end) untuk jurusan [teknologi informasi](major).
+    - Mohon informasi kegiatan mahasiswa dari [tahun 2021](start) [sampai 2023](end).
+    - Apa saja kegiatan yang dilakukan dari [tahun 2020](start) [hingga 2022](end) oleh mahasiswa jurusan [akuntansi](major)?
+    - Saya butuh informasi mengenai kegiatan [dari 2022](start) [hingga 2024](end) untuk jurusan [teknologi informasi](major).
     - Tolong berikan data kegiatan tingkat [internasional](activity_level) pada tahun [2021](year).
     - Saya butuh informasi kegiatan tingkat [lokal](activity_level) dari jurusan [akuntansi](major) tahun [2023](year).
 
@@ -79,10 +83,10 @@ nlu:
     - [2021](year)
     - [ilmu hukum](major)
     - [3 tahun terakhir](period)
-    - [tahun 2019](year_start) [sampai 2023](year_end)
-    - [dari 2021](year_start) [hingga tahun 2022](year_end) untuk jurusan [Ilmu hukum](major)
+    - [tahun 2019](start) [sampai 2023](end)
+    - [dari 2021](start) [tahun 2022](end) untuk jurusan [Ilmu hukum](major)
     - [internasional](activity_level)
-    - [hukum](fakultas)
+    - [hukum](faculty)
     - [lokal](activity_level)
     - [nasional](activity_level)
 
@@ -97,7 +101,7 @@ nlu:
     - Tolong berikan saya informasi mengenai rata-rata IPK untuk mahasiswa jurusan [manajemen](major) di tahun [2020](year).
     - Apakah ada data IPK mahasiswa [Ilmu hukum](major) pada [tahun ini](period)?
     - Mohon informasi tentang rata-rata IPK dari jurusan [pemasaran](major) selama [4 tahun terakhir](period).
-    - Saya ingin tahu data IPK mahasiswa dari [tahun 2021](year_start) [sampai 2023](year_end) di jurusan [akuntansi](major).
+    - Saya ingin tahu data IPK mahasiswa dari [tahun 2021](start) [sampai 2023](end) di jurusan [akuntansi](major).
     - Apa rata-rata IPK untuk mahasiswa [angkatan 2018](cohort) di jurusan [teknologi informasi](major)?
 
 - intent: inform_ipk_data
@@ -108,8 +112,8 @@ nlu:
     - [teknik sipil dan perencaan](faculty).
     - [ilmu Pendidikan](faculty).
     - [dari tahun lalu](period)
-    - [tahun 2012](year_start) [sampai 2023](year_end)
-    - [tahun 2022](year_start) [hingga tahun 2024](year_end) untuk jurusan [pemasaran](major)
+    - [tahun 2012](start) [sampai 2023](end)
+    - [tahun 2022](start) [hingga 2024](end) untuk jurusan [pemasaran](major)
     - [angkatan 2022](cohort)
     - [angkatan 2018](cohort)
     - [angkatan 2019](cohort)
@@ -117,56 +121,56 @@ nlu:
 
 - intent: ask_lecturer_data
   examples: |
-    - Ada dosen di Fakultas [Ilmu Pendidikan](faculty)?
-    - Saya ingin tahu dosen di Fakultas [Teknik Sipil dan Perencanaan](faculty).
-    - Siapa saja dosen di [Arsitektur](major)?
-    - Tolong berikan daftar dosen yang mengajar jurusan [Sistem Informasi](major).
+    - Ada di Fakultas [Ilmu Pendidikan](faculty)?
+    - Saya ingin tahu di Fakultas [Teknik Sipil dan Perencanaan](faculty).
+    - Siapa saja di [Arsitektur](major)?
+    - Tolong berikan daftar yang mengajar jurusan [Sistem Informasi](major).
     - Apakah ada dosen di [Teknologi Informasi](major)?
-    - Dosen di Fakultas [Bisnis dan Manajemen](faculty) siapa saja?
-    - Saya ingin mengetahui dosen di jurusan [Akuntansi](major).
-    - Ada data dosen jurusan [Pariwisata](major)?
-    - Bisa berikan saya informasi tentang dosen di [Magister Manajemen](major)?
-    - Saya ingin tahu dosen di Fakultas [Hukum](faculty).
-    - Siapa saja dosen di jurusan [Ilmu Hukum](major)?
-    - Apa saja informasi tentang dosen di [Magister Hukum](major)?
-    - Dosen [Teknik Sipil](major)?
-    - Dosen [Arsitektur](major)?
-    - Dosen di [Ilmu Hukum](major)?
-    - Dosen [Manajemen](major)?
-    - Dosen [Sistem Informasi](major)?
-    - Dosen [Magister Manajemen](major)?
-    - Dosen [Pariwisata](major)?
-    - Dosen Fakultas [Ilmu Pendidikan](faculty)?
-    - Dosen di Fakultas [Ilmu Komputer](faculty)?
-    - Ada dosen di Fakultas [Hukum](faculty)?
-    - Dosen jurusan [Akuntansi](major)?
-    - Siapa saja dosen di [Sistem Informasi](major)?
-    - Dosen [Teknologi Informasi](major)?
-    - Dosen [Magister Hukum](major)?
-    - Ada dosen di Fakultas [Bisnis dan Manajemen](faculty)?
-    - Dosen di [Teknologi Informasi](major)?
-    - Ada dosen di [Arsitektur](major)?
-    - Dosen [Hukum](major)?
-    - Dosen Fakultas [Teknik Sipil](faculty)?
-    - Dosen Fakultas [Pendidikan](faculty)?
-    - Tolong informasikan siapa dosen di [Arsitektur](major).
-    - Daftar dosen [Teknik Sipil](major)?
-    - List dosen [Sistem Informasi](major)
-    - Berikan list dosen [Arsitektur](major)
+    - di Fakultas [Bisnis dan Manajemen](faculty) siapa saja?
+    - Saya ingin mengetahui di jurusan [Akuntansi](major).
+    - Ada data jurusan [Pariwisata](major)?
+    - Bisa berikan saya informasi tentang di [Magister Manajemen](major)?
+    - Saya ingin tahu di Fakultas [Hukum](faculty).
+    - Siapa saja di jurusan [Ilmu Hukum](major)?
+    - Apa saja informasi tentang di [Magister Hukum](major)?
+    - [Teknik Sipil](major)?
+    - [Arsitektur](major)?
+    - di [Ilmu Hukum](major)?
+    - [Manajemen](major)?
+    - [Sistem Informasi](major)?
+    - [Magister Manajemen](major)?
+    - [Pariwisata](major)?
+    - Fakultas [Ilmu Pendidikan](faculty)?
+    - di Fakultas [Ilmu Komputer](faculty)?
+    - Ada di Fakultas [Hukum](faculty)?
+    - [dosen-dosen](lecturer) jurusan [Akuntansi](major)?
+    - Siapa saja di [Sistem Informasi](major)?
+    - [Teknologi Informasi](major)?
+    - [Magister Hukum](major)?
+    - Ada di Fakultas [Bisnis dan Manajemen](faculty)?
+    - di [Teknologi Informasi](major)?
+    - Ada di [Arsitektur](major)?
+    - [Ilmu Hukum](major)?
+    - Fakultas [Teknik Sipil](faculty)?
+    - Fakultas [Pendidikan](faculty)?
+    - Tolong informasikan siapa di [Arsitektur](major).
+    - Daftar [Teknik Sipil](major)?
+    - List [Sistem Informasi](major)
+    - Berikan list [Arsitektur](major)
 
 - intent: inform_lecturer_data
   examples: |
-    - [Fakultas Ilmu Pendidikan](faculty)
-    - [Fakultas Teknik Sipil dan Perencanaan](faculty)
-    - [Fakultas Ilmu Komputer](faculty)
-    - [Fakultas Hukum](faculty)
-    - [Pendidikan Bahasa Inggris](major)
-    - [Teknik Sipil](major)
+    - [Ilmu Pendidikan](faculty)
+    - [Teknik Sipil dan Perencanaan](faculty)
+    - [Ilmu Komputer](faculty)
+    - [Hukum](faculty)
+    - [Bahasa Inggris](major)
+    - [Sipil](major)
     - [Sistem Informasi](major)
     - [Akuntansi](major)
     - [Pariwisata](major)
     - [Manajemen](major)
-    - [Hukum](major)
-    - [dosen](lecturer)
+    - [Ilmu Hukum](major)
+    -
     - [Magister Hukum](major)
     - [Magister Manajemen](major)
