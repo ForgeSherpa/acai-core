@@ -3,17 +3,24 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from datetime import datetime
 from rapidfuzz import process
-import re
+# import re
+from typing import Any, Text, Dict, List
 
-def extract_number(text: str) -> int:
-    match = re.search(r'\b\d+\b', text)
-    return int(match.group()) if match else None
+# def extract_number(text: str) -> int:
+#     text = re.sub(r"\D", "", text) 
+#     match = re.search(r'\d+', text)
+#     if match:
+#         return int(match.group())
+#     else:
+#         return None
+
 
 def word_match(input_text: str, patterns: list, threshold: int = 85) -> str:
     result = process.extractOne(input_text, patterns)  
     if result and result[1] >= threshold:
         return result[0] 
     return input_text 
+
 
 def build_response(tracker: Tracker) -> dict:
     start = tracker.get_slot('start')
@@ -23,10 +30,17 @@ def build_response(tracker: Tracker) -> dict:
     period = tracker.get_slot('period')
     faculty = tracker.get_slot('faculty')
 
+    entities = tracker.latest_message.get('entities', [])
+
+    if isinstance(entities, dict):  
+        entities = [entities]
+    elif isinstance(entities, str):  
+        entities = [] 
+
     faculty_patterns = ["Bisnis dan Manajemen", "Ilmu Pendidikan", "Ilmu Komputer", "Teknik Sipil dan Perencanaan", "Hukum"]
     major_patterns = [
         "Manajemen", "Akuntansi", "Pariwisata", "Pendidikan Bahasa Inggris", 
-        "Teknik Sipil", "Arsitektur", "Ilmu Hukum", "Sistem Informasi", "Teknologi Informasi",
+        "Teknik Sipil", "Arsitektur", "Ilmu Hukum", "Sistem Informasi", "Teknologi Informasi",
     ]
 
     if faculty:
@@ -47,25 +61,31 @@ def build_response(tracker: Tracker) -> dict:
     if "rata-rata" in message:
         mode = "avg"
 
-    if start and end:
-        starts = int(start.split()[1])
-        ends = int(end.split()[1])
-        response["range"] = calculate_years_range(starts, ends)
-        mode = "sum" 
+    if start:
+        response['start'] = start
+
+    if end:
+        response['end'] = end
+
+    # if year:
+    #     year_number = extract_number(year)
+    #     if year_number: 
+    #         response["year"] = year_number
+
     if year:
-        year_number = extract_number(year)
-        if year_number: 
-            response["year"] = year_number
+        response["year"] = year
+
     if major:
         response["major"] = major
+
     if faculty:
         response["faculty"] = faculty
+
     if period_years:
-        response["range"] = calculate_period_range(period_years)
+        response["year_range"] = calculate_period_range(period_years)
         mode = "sum" 
 
     response["mode"] = mode
-
     return response
 
 
@@ -87,7 +107,8 @@ class ActionShowGraduationData(Action):
     def name(self) -> str:
         return "action_show_graduation_data"
 
-    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, _domain) -> list:
+    def run(self, dispatcher: CollectingDispatcher,tracker: Tracker,domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         intent = "ask_graduation_data"
         response = build_response(tracker)
 
@@ -195,11 +216,13 @@ class ActionShowIPKData(Action):
 
         response = build_response(tracker)
         
-        if cohort:
-            cohort_number = extract_number(cohort)
-            if cohort_number:
-                response["cohort"] = cohort_number
+        # if cohort:
+        #     cohort_number = extract_number(cohort)
+        #     if cohort_number:
+        #         response["cohort"] = cohort_number
 
+        if cohort:
+            response["cohort"] = cohort
 
         final_response = {
             "intent": intent,
