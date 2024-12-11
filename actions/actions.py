@@ -3,24 +3,42 @@ from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet
 from datetime import datetime
 from rapidfuzz import process
-# import re
+import re
 from typing import Any, Text, Dict, List
 
-# def extract_number(text: str) -> int:
-#     text = re.sub(r"\D", "", text) 
-#     match = re.search(r'\d+', text)
-#     if match:
-#         return int(match.group())
-#     else:
-#         return None
 
+faculty_patterns = [
+    "Fakultas Bisnis dan Manajemen",
+    "Fakultas Ilmu Pendidikan",
+    "Fakultas Ilmu Komputer",
+    "Fakultas Teknik Sipil dan Perencanaan",
+    "Fakultas Hukum",
+]
+major_patterns = [
+    "Manajemen",
+    "Akuntansi",
+    "Pariwisata",
+    "Pendidikan Bahasa Inggris",
+    "Teknik Sipil",
+    "Arsitektur",
+    "Ilmu Hukum",
+    "Sistem Informasi",
+    "Teknologi Informasi",
+]
 
 def word_match(input_text: str, patterns: list, threshold: int = 85) -> str:
-    result = process.extractOne(input_text, patterns)  
+    result = process.extractOne(input_text, patterns)
     if result and result[1] >= threshold:
-        return result[0] 
-    return input_text 
+        return result[0]
+    return input_text
 
+def extract_number(text: str) -> int:
+    text = re.sub(r"\D", "", text) 
+    match = re.search(r'\d+', text)
+    if match:
+        return int(match.group())
+    else:
+        return None
 
 def build_response(tracker: Tracker) -> dict:
     start = tracker.get_slot('start')
@@ -29,6 +47,7 @@ def build_response(tracker: Tracker) -> dict:
     major = tracker.get_slot('major')
     period = tracker.get_slot('period')
     faculty = tracker.get_slot('faculty')
+    range = tracker.get_slot('range')
 
     entities = tracker.latest_message.get('entities', [])
 
@@ -37,16 +56,10 @@ def build_response(tracker: Tracker) -> dict:
     elif isinstance(entities, str):  
         entities = [] 
 
-    faculty_patterns = ["Bisnis dan Manajemen", "Ilmu Pendidikan", "Ilmu Komputer", "Teknik Sipil dan Perencanaan", "Hukum"]
-    major_patterns = [
-        "Manajemen", "Akuntansi", "Pariwisata", "Pendidikan Bahasa Inggris", 
-        "Teknik Sipil", "Arsitektur", "Ilmu Hukum", "Sistem Informasi", "Teknologi Informasi",
-    ]
-
     if faculty:
-        faculty = word_match(faculty.lower(), faculty_patterns)
+        faculty = word_match(faculty, faculty_patterns)
     if major:
-        major = word_match(major.lower(), major_patterns)
+        major = word_match(major, major_patterns)
 
     period_years = None
     if period == "dari tahun lalu":
@@ -67,13 +80,10 @@ def build_response(tracker: Tracker) -> dict:
     if end:
         response['end'] = end
 
-    # if year:
-    #     year_number = extract_number(year)
-    #     if year_number: 
-    #         response["year"] = year_number
-
     if year:
-        response["year"] = year
+        year_number = extract_number(year)
+        if year_number: 
+            response["year"] = year_number
 
     if major:
         response["major"] = major
@@ -81,9 +91,18 @@ def build_response(tracker: Tracker) -> dict:
     if faculty:
         response["faculty"] = faculty
 
+
     if period_years:
         response["year_range"] = calculate_period_range(period_years)
         mode = "sum" 
+
+    if range:
+        # response["range"] = range
+        mode = "sum" 
+        current_year = datetime.now().year
+        year = int(year)
+        response["year_range"] = f"{year} - {current_year}"
+        del response["year"]
 
     response["mode"] = mode
     return response
@@ -126,7 +145,8 @@ class ActionShowGraduationData(Action):
             "year", 
             "major",
             "faculty",
-            "period"
+            "period",
+            "range"
         ])
 
 
@@ -163,7 +183,8 @@ class ActionShowResearchData(Action):
             "year",
             "major",
             "faculty",
-            "period"
+            "period",
+            "range"
         ])
 
 
@@ -201,7 +222,8 @@ class ActionShowActivityData(Action):
             "major",
             "faculty",
             "period",
-            "activity_level"
+            "activity_level",
+            "range"
         ])
 
 
@@ -216,13 +238,10 @@ class ActionShowIPKData(Action):
 
         response = build_response(tracker)
         
-        # if cohort:
-        #     cohort_number = extract_number(cohort)
-        #     if cohort_number:
-        #         response["cohort"] = cohort_number
-
         if cohort:
-            response["cohort"] = cohort
+            cohort_number = extract_number(cohort)
+            if cohort_number:
+                response["cohort"] = cohort_number
 
         final_response = {
             "intent": intent,
@@ -239,7 +258,8 @@ class ActionShowIPKData(Action):
             "major",
             "faculty",
             "period",
-            "cohort"
+            "cohort",
+            "range"
         ])
 
 class ActionShowLecturerData(Action):

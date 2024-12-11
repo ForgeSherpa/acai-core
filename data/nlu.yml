@@ -28,10 +28,24 @@ nlu:
     - Berikan saya data kelulusan untuk jurusan [Ilmu hukum](major) dari [tahun 2021](start) [sampai 2022](end).
     - Mohon data kelulusan [tahun 2022](start) [hingga 2024](end) untuk jurusan [pemasaran](major).
     - Apa informasi kelulusan [tahun 2018](start) [sampai 2020](end) untuk jurusan [akuntansi](major)?
+    - Berikan informasi kelulusan [dari tahun 2018](range) untuk jurusan [akuntansi](major)?
+    - informasi kelulusan [dari] [2019](year)?
+    - informasi kelulusan [dari tahun](range) [2017](year)?
+    - informasi kelulusan [dari] [2019](year)
+    - kelulusan [dari tahun](range) [2017](year)
+    - berikan data kelulusan [dari tahun](range) [2017](year)
+    - informasi kelulusan [dari] [2019](year)
+    - kelulusan mahasiswa [dari tahun](range) [2020](year)
+    - data kelulusan mahasiswa [dari] [2021](year)
+    - informasi kelulusan [dari tahun](range) [2019](year)
 
 - intent: inform_graduation_data
   examples: |
     - [2022](year)
+    - [dari tahun](range)
+    - [dari tahun](range)
+    - [dari](range)
+    - [dari](range)
     - [teknologi informasi](major)
     - [5 tahun terakhir](period)
     - [bisnis dan manajemen](faculty)
@@ -48,10 +62,16 @@ nlu:
     - Apakah ada penelitian yang dilakukan oleh dosen dari dari [tahun 2019](start) [hingga 2023](end) untuk jurusan [akuntansi](major)?
     - Berikan saya data penelitian tingkat [Scopus](publication_type) yang dilakukan dari [tahun 2021](start) [sampai 2022](end) untuk jurusan [Ilmu hukum](major).
     - Tolong kirimkan informasi tentang data penelitian tingkat [Sinta](publication_type) di jurusan [pemasaran](major) dari [tahun 2022](start) [hingga 2024](end).
+    - Tolong kirimkan informasi [dari tahun](range) [2022](year)
+    - Tolong kirimkan informasi [dari tahun](range) [2022](year)
+    - Tolong kirimkan informasi dari [2022](year)
 
 - intent: inform_research_data
   examples: |
     - [2020](year)
+    - [dari tahun](range)
+    - [dari tahun](range)
+    - [dari](range)
     - [manajemen](major)
     - [4 tahun terakhir](period)
     - [Ilmu Komputer](faculty)
@@ -67,7 +87,7 @@ nlu:
     - Saya butuh data kegiatan yang dilakukan oleh mahasiswa pada tahun [2022](year).
     - Apa saja kegiatan yang dilakukan oleh mahasiswa jurusan [ilmu hukum](major) [pada tahun lalu](period)?
     - Saya perlu laporan kegiatan ekstrakurikuler mahasiswa selama [dua tahun terakhir](period).
-    - Mohon data kegiatan tingkat internasional yang diadakan oleh kampus pada tahun [2021](year).
+    - Mohon data kegiatan tingkat [provinsi](activity_level) yang diadakan oleh kampus pada tahun [2021](year).
     - Tolong berikan saya informasi kegiatan mahasiswa di tahun [2020](year) dari jurusan [teknologi informasi](major).
     - Apa data kegiatan mahasiswa jurusan [manajemen](major) di [5 tahun terakhir](period)?
     - Berikan saya data kegiatan dari jurusan [pemasaran](major) tahun [2023](year).
@@ -75,20 +95,28 @@ nlu:
     - Mohon informasi kegiatan mahasiswa dari [tahun 2021](start) [sampai 2023](end).
     - Apa saja kegiatan yang dilakukan dari [tahun 2020](start) [hingga 2022](end) oleh mahasiswa jurusan [akuntansi](major)?
     - Saya butuh informasi mengenai kegiatan [dari 2022](start) [hingga 2024](end) untuk jurusan [teknologi informasi](major).
-    - Tolong berikan data kegiatan tingkat [internasional](activity_level) pada tahun [2021](year).
+    - Tolong berikan data kegiatan tingkat [international](activity_level) pada tahun [2021](year).
+    - Tolong berikan data kegiatan tingkat [national](activity_level) pada tahun [2021](year).
     - Saya butuh informasi kegiatan tingkat [lokal](activity_level) dari jurusan [akuntansi](major) tahun [2023](year).
+    - Saya butuh informasi kegiatan [dari tahun](range) [2014](year)
+    - Saya butuh informasi kegiatan dari [2014](year)
+    - Saya butuh informasi kegiatan [sejak tahun](range) [2014](year)
 
 - intent: inform_activity_data
   examples: |
     - [2021](year)
+    - [dari tahun](range)
+    - [dari](range)
+    - [sejak tahun](range) 
     - [ilmu hukum](major)
     - [3 tahun terakhir](period)
     - [tahun 2019](start) [sampai 2023](end)
     - [dari 2021](start) [tahun 2022](end) untuk jurusan [Ilmu hukum](major)
-    - [internasional](activity_level)
+    - [international](activity_level)
     - [hukum](faculty)
     - [lokal](activity_level)
-    - [nasional](activity_level)
+    - [national](activity_level)
+    - [provinsi](activity_level)
 
 - intent: ask_ipk_data
   examples: |
@@ -103,10 +131,15 @@ nlu:
     - Mohon informasi tentang rata-rata IPK dari jurusan [pemasaran](major) selama [4 tahun terakhir](period).
     - Saya ingin tahu data IPK mahasiswa dari [tahun 2021](start) [sampai 2023](end) di jurusan [akuntansi](major).
     - Apa rata-rata IPK untuk mahasiswa [angkatan 2018](cohort) di jurusan [teknologi informasi](major)?
+    - Saya butuh mengenai ipk [dari tahun](range) [2022](year)?
+    - Saya butuh rata-rata ipk [dari](range) [2014](year)
+    - Saya butuh mengenai ipk [mulai tahun](range) [2022](year)?
 
 - intent: inform_ipk_data
   examples: |
     - [2023](year)
+    - [dari tahun](range)
+    - [mulai tahun](range)
     - [akuntansi](major)
     - [2 tahun terakhir](period)
     - [teknik sipil dan perencaan](faculty).

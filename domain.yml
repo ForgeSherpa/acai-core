@@ -23,6 +23,7 @@ entities:
   - period
   - cohort
   - faculty
+  - range
 
 slots:
   year:
@@ -31,6 +32,13 @@ slots:
     mappings:
       - type: from_entity
         entity: year
+
+  range:
+    type: text
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: range
 
   start:
     type: text
